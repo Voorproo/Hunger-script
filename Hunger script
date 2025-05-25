@@ -1,30 +1,21 @@
-local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
-local camera = game.Workspace.CurrentCamera
-local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
-camera.CFrame = camera.CFrame * shakeCf
-end)
-camShake:Start()
-camShake:ShakeOnce(9, 8, 0.1, 2, 1, 6)
-
 local sound = Instance.new("Sound")
 sound.Parent = game.Workspace
 sound.Name = "s"
 sound.SoundId = "rbxassetid://2738830850"
-sound.Volume = 0.5
-sound.PlaybackSpeed = 0.80
+sound.Volume = 1
+sound.PlaybackSpeed = 0.95
 sound.Looped = false
 sound:Play()
 
-game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1]:SetAttribute("Ambient",Color3.fromRGB(100, 0, 0))
-local a = game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+local hunger = game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 game.Players.LocalPlayer.Character.Humanoid:TakeDamage(1000)
 game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Hunger [Opened Door]"
 end)
-wait(30.5)
-a:Disconnect()
+wait(28.5)
+hunger:Disconnect()
 game.Workspace.s:Destroy()
 local dmg = true
-local hg = game:GetObjects("rbxassetid://131345762745591")[1]
+local hg = game:GetObjects("rbxassetid://139163954602093")[1]
 hg.Parent = game.Workspace
 local hgs = hg:FindFirstChildWhichIsA("BasePart") or hg:FindFirstChildWhichIsA("Part")
 hgs.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Parts.Floor.CFrame + Vector3.new(0,6,0)
@@ -35,17 +26,37 @@ local chr = plr.Character or plr.CharacterAdded:Wait()
 wait(2)
 task.spawn(function()
 	while dmg == true do
-	    task.wait(0.5)
+	    task.wait(0.4)
 	    local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(hgs.Position)
 	    if not camera then
-            if not god == true then
-game.Players.LocalPlayer.Character.Humanoid:TakeDamage(3)
-            game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Hunger"
-	    end
-end
-   end
-end)
+local FPS = 5
+    local clock = tick()
+        while clock + 1.5 / FPS > tick() do end
+    wait()
+    clock = tick()
+game.Players.LocalPlayer.Character.Humanoid:TakeDamage(6)
 
+function GitAud(soundgit,filename)
+    SoundName=tostring(SoundName)
+    local url=soundgit
+    local FileName = filename
+    writefile(FileName..".mp3", game:HttpGet(url))
+    return (getcustomasset or getsynasset)(FileName..".mp3")
+end
+
+function CustomGitSound(soundlink, vol, filename)
+    local sound = Instance.new("Sound")
+    sound.SoundId = GitAud(soundlink, filename)
+    sound.Parent = workspace
+    sound.Volume = 0.8
+   sound:Play()
+end
+
+CustomGitSound("https://raw.githubusercontent.com/Voorproo/Silence/refs/heads/main/RPReplay_Final1748135502%20(mp3cut.net).mp3", 1, "hunger")
+end
+game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Hunger"
+end
+end)
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 dmg = false
 hg:Destroy()
@@ -56,18 +67,17 @@ if game:GetService("ReplicatedStorage"):FindFirstChild("hunger") then
     warn("Survive hunger")
     return true
 end
+
 local Test = Instance.new("Part")
 Test.Name = "hunger"
 Test.Parent = game:GetService("ReplicatedStorage")
 Test = 1
-
+---====== Load achievement giver ======---
 local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
-
 ---====== Display achievement ======---
-
 achievementGiver({
     Title = "Pro Gamer",
-    Desc = "He Come For Your Life",
-    Reason = "Survive The Hunger",
+    Desc = "He came for you life",
+    Reason = "Survival Hunger",
     Image = "rbxassetid://89654455825080"
 })
