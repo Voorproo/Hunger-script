@@ -79,5 +79,5 @@ achievementGiver({
     Title = "Pro Gamer",
     Desc = "He came for you life",
     Reason = "Survival Hunger",
-    Image = "rbxassetid://89654455825080"
+    Image = "rbxassetid://"
 })
