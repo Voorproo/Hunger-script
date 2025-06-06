@@ -6,35 +6,97 @@ sound.Volume = 1
 sound.PlaybackSpeed = 0.95
 sound.Looped = false
 sound:Play()
-
+sound.Ended:Connect(function()
+    sound:Destroy()
+    end)
 local hunger = game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-game.Players.LocalPlayer.Character.Humanoid:TakeDamage(1000)
+replicatesignal(game.Players.LocalPlayer.Kill)
 game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Hunger [Opened Door]"
 end)
-wait(27)
+wait(25)
 hunger:Disconnect()
-game.Workspace.s:Destroy()
+
 local dmg = true
-local hg = game:GetObjects("rbxassetid://126362173602649")[1]
-hg.Parent = game.Workspace
-local hgs = hg:FindFirstChildWhichIsA("BasePart") or hg:FindFirstChildWhichIsA("Part")
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/Voorproo/Fogroom/refs/heads/main/Wwwhyyyyil"))()
+local entity = spawner.Create({
+	Entity = {
+		Name = "Hungeryeyyyh",
+		Asset = "rbxassetid://126362173602649",
+		HeightOffset = 0
+	},
+	Lights = {
+		Flicker = {
+			Enabled = false,
+			Duration = 1
+		},
+		Shatter = false,
+		Repair = false
+	},
+	Earthquake = {
+		Enabled = false
+	},
+	CameraShake = {
+		Enabled = true,
+		Range = 10,
+		Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
+	},
+	Movement = {
+		Speed = 0.001,
+		Delay = 0,
+		Reversed = false
+	},
+	Rebounding = {
+		Enabled = false,
+		Type = "Ambush", -- "Blitz"
+		Min = 1,
+		Max = 1,
+		Delay = 2
+	},
+	Damage = {
+		Enabled = false,
+		Range = 40,
+		Amount = 125
+	},
+	Crucifixion = {
+		Enabled = true,
+		Range = 50,
+		Resist = false,
+		Break = true
+	},
+	Death = {
+		Type = "Guiding", -- "Curious"
+		Hints = {"Death", "Hints", "Go", "Here"},
+		Cause = ""
+	}
+})
+
+---====== Debug entity ======---
+
+entity:SetCallback("OnSpawned", function()
+function GetRoom()
+        local gruh = workspace.CurrentRooms
+        return gruh:FindFirstChild(game.ReplicatedStorage.GameData.LatestRoom.Value)
+end
+
+local hgs = game.Workspace.Hungeryeyyyh:FindFirstChildWhichIsA("BasePart")
 hgs.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Parts.Floor.CFrame + Vector3.new(0,6,0)
+local ultimaroom = game.ReplicatedStorage.GameData.LatestRoom.Value
 
-local plr = game.Players.LocalPlayer
-local chr = plr.Character or plr.CharacterAdded:Wait()
-
-wait(2)
 task.spawn(function()
-	while dmg == true do
-	    task.wait(0.2)
-	    local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(hgs.Position)
-	    if not camera then
+while dmg == true do
+task.wait(0.1)
+
+local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(game.Workspace.Hungeryeyyyh:FindFirstChildWhichIsA("BasePart").Position)
+if not camera then
+
 local FPS = 5
-    local clock = tick()
-        while clock + 1.6 / FPS > tick() do end
-    wait()
-    clock = tick()
-game.Players.LocalPlayer.Character.Humanoid:TakeDamage(6)
+local clock = tick()
+while clock + 2 / FPS > tick() do end
+wait()
+clock = tick()
+
+game.Players.LocalPlayer.Character.Humanoid:TakeDamage(7)
+game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Hunger"
 
 function GitAud(soundgit,filename)
     SoundName=tostring(SoundName)
@@ -44,22 +106,24 @@ function GitAud(soundgit,filename)
     return (getcustomasset or getsynasset)(FileName..".mp3")
 end
 
-function CustomGitSound(soundlink, vol, filename)
     local sound = Instance.new("Sound")
-    sound.SoundId = GitAud(soundlink, filename)
+    sound.SoundId = GitAud("https://raw.githubusercontent.com/Voorproo/Silence/refs/heads/main/RPReplay_Final1748135502%20(mp3cut.net).mp3", 1, "hunger")
     sound.Parent = workspace
     sound.Volume = 0.8
-   sound:Play()
+    sound:Play()
+    
+    sound.Ended:Connect(function()
+    sound:Destroy()
+    end)
+    
 end
-
-CustomGitSound("https://raw.githubusercontent.com/Voorproo/Silence/refs/heads/main/RPReplay_Final1748135502%20(mp3cut.net).mp3", 1, "hunger")
-end
-game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Hunger"
 end
 end)
+
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 dmg = false
-hg:Destroy()
+game.Workspace.Hungeryeyyyh:Destroy()
+
 caa = 0
 tween = game:GetService("TweenService")
 local TestMultplayer = true
@@ -81,3 +145,9 @@ achievementGiver({
     Reason = "Survival Hunger",
     Image = "rbxassetid://"
 })
+
+end)
+
+---====== Run entity ======---
+
+entity:Run()
